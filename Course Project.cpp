@@ -6,6 +6,7 @@
 int main()
 {
     printf_s("Hello World!");
+    return 0;
 }
 
 // 1. Обработка матриц
