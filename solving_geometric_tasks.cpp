@@ -1,5 +1,7 @@
 #include "common.h"
 
+RECT TRect;
+
 typedef struct
 {
     int x;
@@ -109,13 +111,11 @@ bool in_square(dot* square_dots, dot* dot)
     return result;
 }
 
-void print_line_in_axes(int x_line_start, int y_line_start, int x_line_end, int y_line_end, int number_sign_coord, int x_text, int y_text)
+void print_line_in_axes(int x_line_start, int y_line_start, int x_line_end, int y_line_end, int number_sign_coord, int x_text, int y_text, int coord)
 {
-    int coord = 0;
     CHAR S[10];
     MoveToEx(hDC, x_line_start, y_line_start, NULL);
     LineTo(hDC, x_line_end, y_line_end);
-    coord += DELTA;
     sprintf_s(S, "%i", number_sign_coord * coord);
     TextOut(hDC, x_text, y_text, (LPCSTR)S, strlen(S));
 }
@@ -123,41 +123,49 @@ void print_line_in_axes(int x_line_start, int y_line_start, int x_line_end, int 
 void print_axes()
 {
     int i = 0;
-    int horizontal_center = (Rect.right - Rect.left) / 2 + 500;
-    int vertical_center = Rect.bottom / 2;
+    int horizontal_center = (TRect.right - TRect.left) / 2 + 525;
+    int vertical_center = TRect.bottom / 2;
+    int coord = 0;
     SelectObject(hDC, hBrushWhite);
-    Rectangle(hDC, Rect.left, Rect.top, Rect.right, Rect.bottom);
+    Rectangle(hDC, TRect.left, TRect.top, TRect.right, TRect.bottom);
     SelectObject(hDC, hPenBlack);
-    MoveToEx(hDC, horizontal_center, Rect.top, NULL);
-    LineTo(hDC, horizontal_center, Rect.bottom);
-    TextOut(hDC, Rect.right - 16, vertical_center, (LPCSTR)"X", strlen("X"));
-    TextOut(hDC, horizontal_center, vertical_center, (LPCSTR)"0", strlen("0"));
+    MoveToEx(hDC, horizontal_center, TRect.top, NULL);
+    LineTo(hDC, horizontal_center, TRect.bottom);
+    TextOut(hDC, TRect.right - 16, vertical_center, (LPCSTR)"X", strlen("X") + 1);
+    TextOut(hDC, horizontal_center, vertical_center, (LPCSTR)"0", strlen("0") + 1);
     MoveToEx(hDC, 0, vertical_center, NULL);
-    LineTo(hDC, Rect.right, vertical_center);
-    TextOut(hDC, horizontal_center, Rect.top, (LPCSTR)"Y", strlen("Y"));
+    LineTo(hDC, TRect.right, vertical_center);
+    TextOut(hDC, horizontal_center, TRect.top, (LPCSTR)"Y", strlen("Y") + 1);
     SelectObject(hDC, hPenGrey);
-    for (i = horizontal_center + DELTA; i < Rect.right; i += DELTA)
+    for (i = horizontal_center + DELTA; i < TRect.right; i += DELTA)
     {
-        print_line_in_axes(i, Rect.top, i, Rect.bottom, 1, i, vertical_center);
+        coord += DELTA;
+        print_line_in_axes(i, TRect.top, i, TRect.bottom, 1, i, vertical_center, coord);
     }
-    for (i = horizontal_center - DELTA; i > Rect.left; i -= DELTA)
+    coord = 0;
+    for (i = horizontal_center - DELTA; i > TRect.left; i -= DELTA)
     {
-        print_line_in_axes(i, Rect.top, i, Rect.bottom, -1, i, vertical_center);
+        coord += DELTA;
+        print_line_in_axes(i, TRect.top, i, TRect.bottom, -1, i, vertical_center, coord);
     }
-    for (i = vertical_center - DELTA; i > Rect.top; i -= DELTA)
+    coord = 0;
+    for (i = vertical_center - DELTA; i > TRect.top; i -= DELTA)
     {
-        print_line_in_axes(Rect.left, i, Rect.right, i, 1, horizontal_center, i);
+        coord += DELTA;
+        print_line_in_axes(TRect.left, i, TRect.right, i, 1, horizontal_center, i, coord);
     }
-    for (i = vertical_center + DELTA; i < Rect.bottom; i += DELTA)
+    coord = 0;
+    for (i = vertical_center + DELTA; i < TRect.bottom; i += DELTA)
     {
-        print_line_in_axes(Rect.left, i, Rect.right, i, -1, horizontal_center, i);
+        coord += DELTA;
+        print_line_in_axes(TRect.left, i, TRect.right, i, -1, horizontal_center, i, coord);
     }
 }
 
 void print_square(dot* square_dots)
 {
-    int horizontal_center = (Rect.right - Rect.left) / 2 + 500;
-    int vertical_center = Rect.bottom / 2;
+    int horizontal_center = (TRect.right - TRect.left) / 2 + 525;
+    int vertical_center = TRect.bottom / 2;
     SelectObject(hDC, hPenRed);
     MoveToEx(hDC, horizontal_center + square_dots[0].x, vertical_center - square_dots[0].y, NULL);
     LineTo(hDC, horizontal_center + square_dots[1].x, vertical_center - square_dots[1].y);
@@ -168,8 +176,8 @@ void print_square(dot* square_dots)
 
 void print_dots(dot* square_dots, dot* dots, HPEN dots_color_in_square, HPEN dots_color_out_square)
 {
-    int horizontal_center = (Rect.right - Rect.left) / 2 + 500;
-    int vertical_center = Rect.bottom / 2;
+    int horizontal_center = (TRect.right - TRect.left) / 2 + 525;
+    int vertical_center = TRect.bottom / 2;
     for (int i = 0; i < 10; i++)
     {
         if (in_square(square_dots, &dots[i]))
@@ -184,10 +192,12 @@ void print_dots(dot* square_dots, dot* dots, HPEN dots_color_in_square, HPEN dot
     }
 }
 
-int solving_geometric_tasks()
+int solving_geometric_tasks(int mode)
 {
-    Rect.right += 500;
-    Rect.left += 500;
+    system("CLS");
+    TRect = Rect;
+    TRect.left = 525;
+    TRect.right = 1725;
     dot square_dots[4];
     int i = 0;
     printf("Введите точки углов квадрата:\n");
@@ -231,43 +241,26 @@ int solving_geometric_tasks()
     }
     int cmd = 0;
     dot dots[10];
-    printf("Выберите вариант формирования точек:\n");
-    printf("1. Сформировать точки случайным образом.\n");
-    printf("2. Сформировать точки вводом с клавиатуры.\n");
-    printf("3. Сформировать точки данными из файла.\n");
-    printf("0. Завершить работу программы.\n");
-    printf("Введите номер действия: ");
-    scanf_s("%i", &cmd);
-    while (cmd < 0 || cmd > 3)
+    switch (mode)
     {
-        printf("[Ошибка]: выбран неверный номер действия. Введите номер действия: ");
-        scanf_s("%i", &cmd);
-    }
-    switch (cmd)
-    {
-        case 0:
-        {
-            return 0;
-            break;
-        }
-        case 1:
-        {
-            create_dots_rand(&dots[0]);
-            break;
-        }
-        case 2:
-        {
-            create_dots_from_keyboard(&dots[0]);
-            break;
-        }
-        case 3:
-        {
-            char filename[256];
-            printf("Введите название файла с форматом (пример: filename.txt): ");
-            scanf_s("%255s", &filename, sizeof(filename));
+	    case WITH_FILE_INPUT:
+	    {
+	        char filename[256];
+	        printf("Введите путь к файлу (пример: D:\\Documents\\filename.txt): ");
+	        scanf_s("%255s", &filename, sizeof(filename));
             create_dots_from_file(&dots[0], filename);
-            break;
-        }
+	        break;
+	    }
+	    case WITH_RANDOM_GENERATION:
+	    {
+            create_dots_rand(&dots[0]);
+	        break;
+	    }
+	    case WITH_KEYBOARD_INPUT:
+	    {
+            create_dots_from_keyboard(&dots[0]);
+	        break;
+	    }
     }
     for (i = 0; i < 10; i++)
     {
@@ -282,16 +275,20 @@ int solving_geometric_tasks()
         printf("X: %i\n", dots[i].x);
         printf("Y: %i\n\n", dots[i].y);
     }
-    int key = 0;
+    printf("\nДаважды нажмите ESC, чтоб вернуться в меню...");
+    int tkey = 0;
     HPEN dots_color_in_square = hPenGreen;
     HPEN dots_color_out_square = hPenBlue;
+    SetTextColor(hDC, RGB(0, 0, 0));
+    SetBkColor(hDC, RGB(255, 255, 255));
+    (HFONT)SelectObject(hDC, hFontGraph);
     do
     {
         print_axes();
         print_square(&square_dots[0]);
         print_dots(&square_dots[0], &dots[0], dots_color_in_square, dots_color_out_square);
-        key = _getch();
-        if (key == ENTER)
+        tkey = _getch();
+        if (tkey != ESC)
         {
             do
             {
@@ -301,6 +298,10 @@ int solving_geometric_tasks()
                 dots_color_out_square = hPenColors[i];
             } while (dots_color_in_square == dots_color_out_square);
         }
-    } while (key != ESC);
+    } while (tkey != ESC);
+    _getch();
+    SetTextColor(hDC, RGB(0, 0, 0));
+    SetBkColor(hDC, RGB(255, 255, 255));
+    system("CLS");
 	return 0;
 }

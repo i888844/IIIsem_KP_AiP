@@ -308,10 +308,12 @@ int main()
             if (main_index == 4)
             {
                 main_index = 0;
+                continue;
             }
             else
             {
                 main_index++;
+                continue;
             }
         }
         if (key == ARROW_UP)
@@ -319,10 +321,12 @@ int main()
             if (main_index == 0)
             {
                 main_index = 4;
+                continue;
             }
             else
             {
                 main_index--;
+                continue;
             }
         }
         if (key == ENTER || key == ARROW_RIGHT)
@@ -339,34 +343,41 @@ int main()
                         if (main_index == 0 && sub_index == 5)
                         {
                             sub_index = 1;
+                            continue;
                         }
                         else if ((main_index >= 1 && main_index <= 3) && sub_index == 3)
                         {
                             sub_index = 1;
+                            continue;
                         }
                         else
                         {
                             sub_index++;
+                            continue;
                         }
                     }
                     if (key == ARROW_UP)
                     {
-                        if (main_index == 0 && sub_index == 0)
+                        if (main_index == 0 && sub_index == 1)
                         {
                             sub_index = 5;
+                            continue;
                         }
-                        else if ((main_index >= 1 && main_index <= 3) && sub_index == 0)
+                        else if ((main_index >= 1 && main_index <= 3) && sub_index == 1)
                         {
                             sub_index = 3;
+                            continue;
                         }
                         else
                         {
                             sub_index--;
+                            continue;
                         }
                     }
                     if (key == ESC || key == ARROW_LEFT)
                     {
                         sub_index = 0;
+                        continue;
                     }
                     if (key == ENTER || key == ARROW_RIGHT)
                     {
@@ -376,80 +387,85 @@ int main()
 		                    {
                                 system("CLS");
 			                    //Справка об управлении меню
+                                continue;
 		                    }
                             else if(sub_index == 2)
                             {
                                 system("CLS");
 	                            //Справка о курсовом проекте
+                                continue;
                             }
                             else if (sub_index == 3)
                             {
                                 system("CLS");
                                 //Справка о задании №1 - обработка матриц
+                                continue;
                             }
                             else if (sub_index == 4)
                             {
                                 system("CLS");
                                 //Справка о задании №2 - решение геометрических задач
+                                continue;
                             }
                             else if (sub_index == 5)
                             {
                                 system("CLS");
                                 //Справка о задании №3 - задачи сортировки
+                                continue;
                             }
 	                    }
                         else if(main_index == 1)
                         {
                             if (sub_index == 1)
                             {
-                                system("CLS");
-                                //matrix_processing(WITH_FILE_INPUT)
+                                matrix_processing(WITH_FILE_INPUT);
+                                continue;
                             }
                             else if (sub_index == 2)
                             {
-                                system("CLS");
-                                //matrix_processing(WITH_RANDOM_GENERATION)
+                                matrix_processing(WITH_RANDOM_GENERATION);
+                                continue;
                             }
                             else if (sub_index == 3)
                             {
-                                system("CLS");
-                                //matrix_processing(WITH_KEYBOARD_INPUT)
+                                matrix_processing(WITH_KEYBOARD_INPUT);
+                                continue;
                             }
                         }
                         else if (main_index == 2)
                         {
                             if (sub_index == 1)
                             {
-                                system("CLS");
-                                //solving_geometric_tasks(WITH_FILE_INPUT)
+                                solving_geometric_tasks(WITH_FILE_INPUT);
+                                continue;
                             }
                             else if (sub_index == 2)
                             {
-                                system("CLS");
-                                //solving_geometric_tasks(WITH_RANDOM_GENERATION)
+                                solving_geometric_tasks(WITH_RANDOM_GENERATION);
+                                continue;
                             }
                             else if (sub_index == 3)
                             {
-                                system("CLS");
-                                //solving_geometric_tasks(WITH_KEYBOARD_INPUT)
+                                solving_geometric_tasks(WITH_KEYBOARD_INPUT);
+                                continue;
                             }
                         }
                         else if (main_index == 3)
                         {
                             if (sub_index == 1)
                             {
-                                system("CLS");
-                                //sorting_tasks(WITH_FILE_INPUT)
+                                sorting_tasks(WITH_FILE_INPUT);
+                                continue;
                             }
                             else if (sub_index == 2)
                             {
-                                system("CLS");
-                                //sorting_tasks(WITH_RANDOM_GENERATION)
+                                sorting_tasks(WITH_RANDOM_GENERATION);
+                                continue;
                             }
                             else if (sub_index == 3)
                             {
-                                system("CLS");
-                                //sorting_tasks(WITH_KEYBOARD_INPUT)
+                                sorting_tasks(WITH_KEYBOARD_INPUT);
+                                continue;
                             }
                         }
                     }
@@ -457,7 +473,7 @@ int main()
             }
             else
             {
-                key = ESC;
+                break;
             }
         }
     } while (key != ESC);

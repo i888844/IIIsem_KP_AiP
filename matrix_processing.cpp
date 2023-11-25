@@ -150,8 +150,9 @@ void divide_matrix(double** matrix, int rows, int columns, double divisor)
     }
 }
 
-int matrix_processing()
+int matrix_processing(int mode)
 {
+    system("CLS");
     int columns = 0;
     int rows = 0;
     int cmd = 0;
@@ -168,50 +169,32 @@ int matrix_processing()
         scanf_s("%i", &rows);
     }
     double** original_matrix = create_matrix(rows, columns);
-    printf("Выберите метод заполнения матрицы:\n");
-    printf("1. Сформировать матрицу случайным образом.\n");
-    printf("2. Сформировать матрицу вводом с клавиатуры.\n");
-    printf("3. Сформировать матрицу данными из файла.\n");
-    printf("0. Завершить работу программы.\n");
-    printf("Введите номер действия: ");
-    scanf_s("%i", &cmd);
-    while (cmd < 0 || cmd > 3)
+    switch (mode)
     {
-        printf("[Ошибка]: выбран неверный номер действия. Введите номер действия: ");
-        scanf_s("%i", &cmd);
-    }
-    switch (cmd)
-    {
-        case 0:
-        {
-            free_matrix(original_matrix, rows);
-            return 0;
-            break;
-        }
-        case 1:
-        {
-            fill_matrix_rand(original_matrix, rows, columns);
-            break;
-        }
-        case 2:
-        {
-            fill_matrix_from_keyboard(original_matrix, rows, columns);
-            break;
-        }
-        case 3:
-        {
+	    case WITH_FILE_INPUT:
+	    {
             char filename[256];
-            printf("Введите название файла с форматом (пример: filename.txt): ");
+            printf("Введите путь к файлу (пример: D:\\Documents\\filename.txt): ");
             scanf_s("%255s", &filename, sizeof(filename));
             fill_matrix_from_file(original_matrix, rows, columns, filename);
             break;
-        }
+	    }
+	    case WITH_RANDOM_GENERATION:
+	    {
+            fill_matrix_rand(original_matrix, rows, columns);
+	        break;
+	    }
+	    case WITH_KEYBOARD_INPUT:
+	    {
+            fill_matrix_from_keyboard(original_matrix, rows, columns);
+	        break;
+	    }
     }
     output_matrix(original_matrix, columns, rows);
     double max_module_value = max_module(original_matrix, rows, columns);
     double min_module_value = min_module(original_matrix, rows, columns);
     double avg_main_diagonale = avg_main_diagonal(original_matrix, rows);
-    printf("Максимальный по модулю элемент матрицы равен %.2f\n", max_module_value);
+    printf("\nМаксимальный по модулю элемент матрицы равен %.2f\n", max_module_value);
     printf("Минимальный по модулю элемент матрицы равен %.2f\n", min_module_value);
     printf("Среднее арефметическое значение главной диагонали матрицы равно %.2f\n", avg_main_diagonale);
     printf("\nМатрица, полученная путём деления элементов на максимальный по модулю элемент:\n");
@@ -230,5 +213,8 @@ int matrix_processing()
     free_matrix(after_division_on_max_module, rows);
     free_matrix(after_division_on_min_module, rows);
     free_matrix(after_division_on_avg_main_diagonale, rows);
+    printf("\nНажмите любую клавишу, чтоб вернуться в меню...");
+    _getch();
+    system("CLS");
     return 0;
 }

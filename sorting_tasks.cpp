@@ -122,8 +122,9 @@ void selection_sort(int* array, int length)
     }
 }
 
-int sorting_tasks()
+int sorting_tasks(int mode)
 {
+    system("CLS");
     int lenght = 0;
     int cmd = 0;
     printf("Введите длину массива: ");
@@ -134,44 +135,26 @@ int sorting_tasks()
         scanf_s("%i", &lenght);
     }
     int* array = create_array(lenght);
-    printf("Выберите вариант формирования массива:\n");
-    printf("1. Сформировать массив случайным образом.\n");
-    printf("2. Сформировать массив вводом с клавиатуры.\n");
-    printf("3. Сформировать массив данными из файла.\n");
-    printf("0. Завершить работу программы.\n");
-    printf("Введите номер действия: ");
-    scanf_s("%i", &cmd);
-    while (cmd < 0 || cmd > 3)
+    switch(mode)
     {
-        printf("[Ошибка]: выбран неверный номер действия. Введите номер действия: ");
-        scanf_s("%i", &cmd);
-    }
-    switch (cmd)
-    {
-        case 0:
-        {
-            free_array(array);
-            return 0;
-            break;
-        }
-        case 1:
-        {
+		case WITH_FILE_INPUT:
+	    {
+	        char filename[256];
+            printf("Введите путь к файлу (пример: D:\\Documents\\filename.txt): ");
+	        scanf_s("%255s", &filename, sizeof(filename));
+	        fill_array_from_file(array, lenght, filename);
+	        break;
+	    }
+		case WITH_RANDOM_GENERATION:
+		{
+			fill_array_rand(array, lenght);
+			break;
+		}
+		case WITH_KEYBOARD_INPUT:
+		{
             fill_array_rand(array, lenght);
             break;
-        }
-        case 2:
-        {
-            fill_array_from_keyboard(array, lenght);
-            break;
-        }
-        case 3:
-        {
-            char filename[256];
-            printf("Введите название файла с форматом (пример: filename.txt): ");
-            scanf_s("%255s", &filename, sizeof(filename));
-            fill_array_from_file(array, lenght, filename);
-            break;
-        }
+		}
     }
     printf("Первоначальный массив:\n");
     output_array(array, lenght);
@@ -182,5 +165,8 @@ int sorting_tasks()
     selection_sort(array, lenght);
     printf("Отсортированный массив:\n");
     output_array(array, lenght);
+    printf("\nНажмите любую клавишу, чтоб вернуться в меню...");
+    _getch();
+    system("CLS");
 	return 0;
 }

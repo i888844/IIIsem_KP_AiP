@@ -42,4 +42,7 @@ extern HPEN hPenBrown;
 extern HPEN hPenColors[7];
 extern HFONT hFont;
 extern HFONT hOldFont;
+extern HFONT hFontGraph;
+extern HFONT hFontMenuName;
+extern HFONT hFontMenuStrings;
 extern LOGFONT Lf;
