@@ -1,44 +1,10 @@
-#include "stdio.h"
-#include "stdlib.h"
-#include "conio.h"
-#include "math.h"
-#include "time.h"
-#include "windows.h"
-#include "wingdi.h"
-#include "locale.h"
-
-#pragma warning(disable: 4996)
-
-#define ESC 27
-#define ENTER 13
-#define DELTA 50
+#include "common.h"
 
 typedef struct
 {
     int x;
     int y;
 } dot;
-
-HWND hWnd = GetConsoleWindow();
-HDC hDC = GetDC(hWnd);
-RECT Rect;
-HBRUSH hBrush;
-HBRUSH hOldBrush;
-HBRUSH hBrushWhite = CreateSolidBrush(RGB(255, 255, 255));
-HPEN hPenBlack = CreatePen(PS_SOLID, 5, RGB(0, 0, 0));
-HPEN hPenRed = CreatePen(PS_SOLID, 5, RGB(255, 0, 0));
-HPEN hPenGrey = CreatePen(PS_SOLID, 3, RGB(71, 74, 81));
-HPEN hPenGreen = CreatePen(PS_SOLID, 5, RGB(0, 255, 0));
-HPEN hPenBlue = CreatePen(PS_SOLID, 5, RGB(0, 0, 255));
-HPEN hPenCyan = CreatePen(PS_SOLID, 5, RGB(0, 255, 255));
-HPEN hPenPurple = CreatePen(PS_SOLID, 5, RGB(128, 0, 128));
-HPEN hPenOrange = CreatePen(PS_SOLID, 5, RGB(255, 165, 0));
-HPEN hPenPink = CreatePen(PS_SOLID, 5, RGB(255, 192, 203));
-HPEN hPenBrown = CreatePen(PS_SOLID, 5, RGB(139, 69, 19));
-HPEN hPenColors[7] = { hPenGreen, hPenBlue, hPenCyan, hPenPurple, hPenOrange, hPenPink, hPenBrown };
-HFONT hFont;
-HFONT hOldFont;
-LOGFONT Lf = { 0 };
 
 bool is_square_and_sides_not_zero(dot* square_dots)
 {
@@ -151,7 +117,7 @@ void print_line_in_axes(int x_line_start, int y_line_start, int x_line_end, int 
     LineTo(hDC, x_line_end, y_line_end);
     coord += DELTA;
     sprintf_s(S, "%i", number_sign_coord * coord);
-    TextOut(hDC, x_text, y_text, (LPCWSTR)S, strlen(S));
+    TextOut(hDC, x_text, y_text, (LPCSTR)S, strlen(S));
 }
 
 void print_axes()
@@ -164,11 +130,11 @@ void print_axes()
     SelectObject(hDC, hPenBlack);
     MoveToEx(hDC, horizontal_center, Rect.top, NULL);
     LineTo(hDC, horizontal_center, Rect.bottom);
-    TextOut(hDC, Rect.right - 16, vertical_center, (LPCWSTR)"X", strlen("X"));
-    TextOut(hDC, horizontal_center, vertical_center, (LPCWSTR)"0", strlen("0"));
+    TextOut(hDC, Rect.right - 16, vertical_center, (LPCSTR)"X", strlen("X"));
+    TextOut(hDC, horizontal_center, vertical_center, (LPCSTR)"0", strlen("0"));
     MoveToEx(hDC, 0, vertical_center, NULL);
     LineTo(hDC, Rect.right, vertical_center);
-    TextOut(hDC, horizontal_center, Rect.top, (LPCWSTR)"Y", strlen("Y"));
+    TextOut(hDC, horizontal_center, Rect.top, (LPCSTR)"Y", strlen("Y"));
     SelectObject(hDC, hPenGrey);
     for (i = horizontal_center + DELTA; i < Rect.right; i += DELTA)
     {
@@ -220,16 +186,6 @@ void print_dots(dot* square_dots, dot* dots, HPEN dots_color_in_square, HPEN dot
 
 int solving_geometric_tasks()
 {
-    Lf.lfHeight = 16;
-    Lf.lfWeight = 900;
-    Lf.lfWidth = 8;
-    Lf.lfCharSet = RUSSIAN_CHARSET;
-    strcpy((char*)Lf.lfFaceName, "Times New Roman");
-    hFont = CreateFontIndirect(&Lf);
-    hOldFont = (HFONT)SelectObject(hDC, hFont);
-    SetTextColor(hDC, RGB(0, 0, 0));
-    SetBkColor(hDC, RGB(255, 255, 255));
-    GetClientRect(hWnd, &Rect);
     Rect.right += 500;
     Rect.left += 500;
     dot square_dots[4];

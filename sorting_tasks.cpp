@@ -1,14 +1,4 @@
-#include "stdio.h"
-#include "stdlib.h"
-#include "conio.h"
-#include "math.h"
-#include "time.h"
-#include "locale.h"
-
-#pragma warning(disable: 4996)
-
-#define ANSI_COLOR_RED   "\x1b[31m"
-#define ANSI_COLOR_RESET "\x1b[0m"
+#include "common.h"
 
 int* create_array(int lenght)
 {

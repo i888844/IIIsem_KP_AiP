@@ -1,11 +1,4 @@
-#include "stdio.h"
-#include "stdlib.h"
-#include "conio.h"
-#include "math.h"
-#include "time.h"
-#include "locale.h"
-
-#pragma warning(disable: 4996)
+#include "common.h"
 
 double** create_matrix(int rows, int columns)
 {
