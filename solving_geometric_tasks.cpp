@@ -1,3 +1,4 @@
+//solving_geometric_tasks.cpp
 #include "common.h"
 
 RECT TRect;
