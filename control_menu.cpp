@@ -467,6 +467,28 @@ int control_menu()
 	        }
         }
     } while (key != ESC);
+	DeleteObject(hBrushWhite);
+	DeleteObject(hBrushBIOSBlue);
+	DeleteObject(hBrushBIOSLightBlue);
+	DeleteObject(hPenBlack);
+	DeleteObject(hPenWhite);
+	DeleteObject(hPenRed);
+	DeleteObject(hPenGrey);
+	DeleteObject(hPenGreen);
+	DeleteObject(hPenBlue);
+	DeleteObject(hPenCyan);
+	DeleteObject(hPenPurple);
+	DeleteObject(hPenOrange);
+	DeleteObject(hPenPink);
+	DeleteObject(hPenBrown);
+	for (int i = 0; i < 7; i++)
+	{
+		DeleteObject(hPenColors[i]);
+	}
+	DeleteObject(hFontGraph);
+	DeleteObject(hFontMenuName);
+	DeleteObject(hFontMenuStrings);
+	ReleaseDC(hWnd, hDC);
     system("CLS");
     return 0;
 }

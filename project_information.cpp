@@ -8,6 +8,7 @@
 
 int project_information(int mode)
 {
+	system("CLS");
 	FILE* file = NULL;
 	switch(mode)
 	{
@@ -26,7 +27,6 @@ int project_information(int mode)
 			file = fopen("about_matrix_processing_tasks.txt", "r");
 			break;
 		}
-
 		case (ABOUT_SOLVING_GEOMETRIC_TASKS):
 		{
 			file = fopen("about_solving_geometric_tasks.txt", "r");
@@ -68,7 +68,7 @@ int project_information(int mode)
 	}
 	fclose(file);
 	free(line);
-	printf("\nНажмите любую клавишу, чтоб вернуться в меню...");
+	printf("\n\nНажмите любую клавишу, чтоб вернуться в меню...");
 	_getch();
 	system("CLS");
 	return 0;

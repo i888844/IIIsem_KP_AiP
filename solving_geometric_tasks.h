@@ -1,4 +1,5 @@
 //solving_geometric_tasks.h
+
 #pragma once
 #ifndef SOLVING_GEOMETRIC_TASKS
 #define SOLVING_GEOMETRIC_TASKS
