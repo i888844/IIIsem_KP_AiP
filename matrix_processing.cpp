@@ -1,5 +1,10 @@
 //matrix_processing.cpp
+
+// This is a personal academic project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 #include "common.h"
+#include "matrix_processing.h"
 
 double** create_matrix(int rows, int columns)
 {
@@ -55,7 +60,8 @@ void fill_matrix_rand(double** matrix, int rows, int columns)
     }
 }
 
-void fill_matrix_from_keyboard(double** matrix, int rows, int columns) {
+void fill_matrix_from_keyboard(double** matrix, int rows, int columns)
+{
     printf("¬ведите элементы матрицы:\n");
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
@@ -172,7 +178,7 @@ int matrix_processing(int mode)
     double** original_matrix = create_matrix(rows, columns);
     switch (mode)
     {
-	    case WITH_FILE_INPUT:
+	    case (WITH_FILE_INPUT):
 	    {
             char filename[256];
             printf("¬ведите путь к файлу (пример: D:\\Documents\\filename.txt): ");
@@ -180,12 +186,12 @@ int matrix_processing(int mode)
             fill_matrix_from_file(original_matrix, rows, columns, filename);
             break;
 	    }
-	    case WITH_RANDOM_GENERATION:
+	    case (WITH_RANDOM_GENERATION):
 	    {
             fill_matrix_rand(original_matrix, rows, columns);
 	        break;
 	    }
-	    case WITH_KEYBOARD_INPUT:
+	    case (WITH_KEYBOARD_INPUT):
 	    {
             fill_matrix_from_keyboard(original_matrix, rows, columns);
 	        break;

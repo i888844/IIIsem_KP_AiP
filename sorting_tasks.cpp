@@ -1,5 +1,10 @@
 //sorting_tasks.cpp
+
+// This is a personal academic project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 #include "common.h"
+#include "sorting_tasks.h"
 
 int* create_array(int lenght)
 {
@@ -138,7 +143,7 @@ int sorting_tasks(int mode)
     int* array = create_array(lenght);
     switch(mode)
     {
-		case WITH_FILE_INPUT:
+		case (WITH_FILE_INPUT):
 	    {
 	        char filename[256];
             printf("¬ведите путь к файлу (пример: D:\\Documents\\filename.txt): ");
@@ -146,12 +151,12 @@ int sorting_tasks(int mode)
 	        fill_array_from_file(array, lenght, filename);
 	        break;
 	    }
-		case WITH_RANDOM_GENERATION:
+		case (WITH_RANDOM_GENERATION):
 		{
 			fill_array_rand(array, lenght);
 			break;
 		}
-		case WITH_KEYBOARD_INPUT:
+		case (WITH_KEYBOARD_INPUT):
 		{
             fill_array_rand(array, lenght);
             break;

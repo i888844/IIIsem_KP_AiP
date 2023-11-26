@@ -1,13 +1,11 @@
 //solving_geometric_tasks.cpp
+
+// This is a personal academic project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 #include "common.h"
-
-RECT TRect;
-
-typedef struct
-{
-    int x;
-    int y;
-} dot;
+#include "graphics.h"
+#include "solving_geometric_tasks.h"
 
 bool is_square_and_sides_not_zero(dot* square_dots)
 {
@@ -244,7 +242,7 @@ int solving_geometric_tasks(int mode)
     dot dots[10];
     switch (mode)
     {
-	    case WITH_FILE_INPUT:
+	    case (WITH_FILE_INPUT):
 	    {
 	        char filename[256];
 	        printf("¬ведите путь к файлу (пример: D:\\Documents\\filename.txt): ");
@@ -252,12 +250,12 @@ int solving_geometric_tasks(int mode)
             create_dots_from_file(&dots[0], filename);
 	        break;
 	    }
-	    case WITH_RANDOM_GENERATION:
+	    case (WITH_RANDOM_GENERATION):
 	    {
             create_dots_rand(&dots[0]);
 	        break;
 	    }
-	    case WITH_KEYBOARD_INPUT:
+	    case (WITH_KEYBOARD_INPUT):
 	    {
             create_dots_from_keyboard(&dots[0]);
 	        break;
