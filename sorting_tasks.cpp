@@ -57,7 +57,7 @@ void fill_array_from_keyboard(int* array, int lenght)
     for (int i = 0; i < lenght; i++)
     {
         printf("Введите элемент в позиции [%i]: ", i);
-        scanf("%i", &array[i]);
+        scanf_s("%i", &array[i]);
         printf("\n");
     }
 }

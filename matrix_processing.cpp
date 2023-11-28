@@ -28,6 +28,38 @@ void output_matrix(double** matrix, int columns, int rows)
     }
 }
 
+void output_matrix_to_file(double** matrix, int rows, int columns, FILE* file)
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < columns; j++)
+        {
+            fprintf(file, "%10.2lf ", matrix[i][j]);
+        }
+        fprintf(file, "\n");
+    }
+    fprintf(file, "\n");
+}
+
+void output_matrices_to_file(double** original_matrix, double** after_division_on_max_module, double** after_division_on_min_module, double** after_division_on_avg_main_diagonale, int rows, int columns)
+{
+    FILE* output_file = fopen("matrix_processing_output.txt", "w");
+    if (output_file == NULL)
+    {
+        printf("[Ошибка]: не удалось создать файл.");
+        exit(1);
+    }
+    fprintf(output_file, "%s", "Первоначальная матрица:\n");
+    output_matrix_to_file(original_matrix, rows, columns, output_file);
+    fprintf(output_file, "%s", "\nМатрица после деления на максимальный по модулю элемент:\n");
+    output_matrix_to_file(after_division_on_max_module, rows, columns, output_file);
+    fprintf(output_file, "%s", "\nМатрица после деления на минимальный по модулю элемент:\n");
+    output_matrix_to_file(after_division_on_min_module, rows, columns, output_file);
+    fprintf(output_file, "%s", "\nМатрица после деления на среднее значение главной диагонали:\n");
+    output_matrix_to_file(after_division_on_avg_main_diagonale, rows, columns, output_file);
+    fclose(output_file);
+}
+
 void copy_matrix(double** destination, double** source, int rows, int columns)
 {
     for (int i = 0; i < rows; i++)
@@ -63,10 +95,12 @@ void fill_matrix_rand(double** matrix, int rows, int columns)
 void fill_matrix_from_keyboard(double** matrix, int rows, int columns)
 {
     printf("Введите элементы матрицы:\n");
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < columns; j++) {
-            printf("Введите элемент в позиции [%d][%d]: ", i, j);
-            scanf_s("%lf", &matrix[i][j]);
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < columns; j++)
+        {
+            printf("Введите элемент в позиции [%f][%f]: ", i, j);
+            scanf_s("%f", &matrix[i][j]);
         }
     }
 }
@@ -86,7 +120,7 @@ void fill_matrix_from_file(double** matrix, int rows, int columns, const char* f
         for (int j = 0; j < columns; j++)
         {
             number = 0.0;
-            if (fscanf(file, "%lf", &number) == 1)
+            if (fscanf(file, "%f", &number) == 1)
             {
                 matrix[i][j] = number;
             }
@@ -216,6 +250,7 @@ int matrix_processing(int mode)
     double** after_division_on_avg_main_diagonale = create_matrix(rows, columns);
     copy_matrix(after_division_on_avg_main_diagonale, original_matrix, rows, columns);
     divide_matrix(after_division_on_avg_main_diagonale, rows, columns, avg_main_diagonale);
+    output_matrices_to_file(original_matrix, after_division_on_max_module, after_division_on_min_module, after_division_on_avg_main_diagonale, rows, columns);
     free_matrix(original_matrix, rows);
     free_matrix(after_division_on_max_module, rows);
     free_matrix(after_division_on_min_module, rows);
