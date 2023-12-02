@@ -1,5 +1,3 @@
-//matrix_processing.h
-
 #pragma once
 #ifndef MATRIX_PROCESSING
 #define MATRIX_PROCESSING

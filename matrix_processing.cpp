@@ -1,8 +1,3 @@
-//matrix_processing.cpp
-
-// This is a personal academic project. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
-
 #include "common.h"
 #include "matrix_processing.h"
 
@@ -185,9 +180,7 @@ void divide_matrix(double** matrix, int rows, int columns, double divisor)
         for (int j = 0; j < columns; j++)
         {
             matrix[i][j] /= divisor;
-            printf("%10.2f", matrix[i][j]);
         }
-        printf("\n");
     }
 }
 
@@ -212,51 +205,83 @@ int matrix_processing(int mode)
     double** original_matrix = create_matrix(rows, columns);
     switch (mode)
     {
-	    case (WITH_FILE_INPUT):
-	    {
+        case (WITH_FILE_INPUT):
+        {
             char filename[256];
             printf("Введите путь к файлу (пример: D:\\Documents\\filename.txt): ");
             scanf_s("%255s", &filename, sizeof(filename));
             fill_matrix_from_file(original_matrix, rows, columns, filename);
             break;
-	    }
-	    case (WITH_RANDOM_GENERATION):
-	    {
+        }
+        case (WITH_RANDOM_GENERATION):
+        {
             fill_matrix_rand(original_matrix, rows, columns);
-	        break;
-	    }
-	    case (WITH_KEYBOARD_INPUT):
-	    {
+            break;
+        }
+        case (WITH_KEYBOARD_INPUT):
+        {
             fill_matrix_from_keyboard(original_matrix, rows, columns);
-	        break;
-	    }
+            break;
+        }
     }
+    printf("Первоначальная матрица:\n");
     output_matrix(original_matrix, columns, rows);
     double max_module_value = max_module(original_matrix, rows, columns);
     double min_module_value = min_module(original_matrix, rows, columns);
     double avg_main_diagonale = avg_main_diagonal(original_matrix, rows);
-    printf("\nМаксимальный по модулю элемент матрицы равен %.2f\n", max_module_value);
-    printf("Минимальный по модулю элемент матрицы равен %.2f\n", min_module_value);
-    printf("Среднее арефметическое значение главной диагонали матрицы равно %.2f\n", avg_main_diagonale);
-    printf("\nМатрица, полученная путём деления элементов на максимальный по модулю элемент:\n");
     double** after_division_on_max_module = create_matrix(rows, columns);
     copy_matrix(after_division_on_max_module, original_matrix, rows, columns);
     divide_matrix(after_division_on_max_module, rows, columns, max_module_value);
-    printf("\nМатрица, полученная путём деления элементов на минимальный по модулю элемент:\n");
     double** after_division_on_min_module = create_matrix(rows, columns);
     copy_matrix(after_division_on_min_module, original_matrix, rows, columns);
     divide_matrix(after_division_on_min_module, rows, columns, min_module_value);
-    printf("\nМатрица, полученная путём деления элементов на среднее арифметическое главной диагонали:\n");
     double** after_division_on_avg_main_diagonale = create_matrix(rows, columns);
     copy_matrix(after_division_on_avg_main_diagonale, original_matrix, rows, columns);
     divide_matrix(after_division_on_avg_main_diagonale, rows, columns, avg_main_diagonale);
-    output_matrices_to_file(original_matrix, after_division_on_max_module, after_division_on_min_module, after_division_on_avg_main_diagonale, rows, columns);
+    do
+    {
+        printf("1 - Вывести максимальный по модулю элемент и матрицу, делённую на него.\n");
+        printf("2 - Вывести минимальный по модулю элемент и матрицу, делённую на него.\n");
+        printf("3 - Вывести среднее арифметическое значение главной диагонали и матрицу, деленную на него.\n");
+        printf("4 - Записать все матрицы в файл.\n");
+        printf("0 - Вернуться в главное меню.\n");
+        printf("Введите номер команды: ");
+        scanf_s("%i", &cmd);
+        switch (cmd)
+        {
+            case (0):
+            {
+                break;
+            }
+            case (1):
+            {
+                printf("Максимальный по модулю элемент матрицы равен: %.2f\n", max_module_value);
+                output_matrix(after_division_on_max_module, rows, columns);
+                break;
+            }
+            case (2):
+            {
+                printf("Минимальный по модулю элемент матрицы равен %.2f\n", min_module_value);
+                output_matrix(after_division_on_min_module, rows, columns);
+                break;
+            }
+            case (3):
+            {
+                printf("Среднее арефметическое значение главной диагонали матрицы равно %.2f\n", avg_main_diagonale);
+                output_matrix(after_division_on_avg_main_diagonale, rows, columns);
+                break;
+            }
+            case (4):
+            {
+                output_matrices_to_file(original_matrix, after_division_on_max_module, after_division_on_min_module, after_division_on_avg_main_diagonale, rows, columns);
+                break;
+            }
+        }
+    } while (cmd != 0);
     free_matrix(original_matrix, rows);
     free_matrix(after_division_on_max_module, rows);
     free_matrix(after_division_on_min_module, rows);
     free_matrix(after_division_on_avg_main_diagonale, rows);
-    printf("\nНажмите любую клавишу, чтоб вернуться в меню...");
-    _getch();
     system("CLS");
     return 0;
 }

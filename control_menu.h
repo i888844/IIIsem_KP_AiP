@@ -1,5 +1,3 @@
-//control_menu.h
-
 #pragma once
 #ifndef CONTROL_MENU
 #define CONTROL_MENU

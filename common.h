@@ -1,5 +1,3 @@
-// common.h
-
 #pragma once
 #ifndef COMMON
 #define COMMON

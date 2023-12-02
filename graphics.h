@@ -1,11 +1,10 @@
-//graphics.h
-
 #pragma once;
 #ifndef GRAPHICS
 #define GRAPHICS
 
 extern HWND hWnd;
 extern HDC hDC;
+extern HANDLE hConsole;
 extern RECT Rect;
 extern RECT TRect;
 extern HBRUSH hBrushWhite;

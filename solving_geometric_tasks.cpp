@@ -1,8 +1,3 @@
-//solving_geometric_tasks.cpp
-
-// This is a personal academic project. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
-
 #include "common.h"
 #include "graphics.h"
 #include "solving_geometric_tasks.h"
@@ -242,24 +237,24 @@ int solving_geometric_tasks(int mode)
     dot dots[10];
     switch (mode)
     {
-	    case (WITH_FILE_INPUT):
-	    {
-	        char filename[256];
-	        printf("¬ведите путь к файлу (пример: D:\\Documents\\filename.txt): ");
-	        scanf_s("%255s", &filename, sizeof(filename));
+        case (WITH_FILE_INPUT):
+        {
+            char filename[256];
+            printf("¬ведите путь к файлу (пример: D:\\Documents\\filename.txt): ");
+            scanf_s("%255s", &filename, sizeof(filename));
             create_dots_from_file(&dots[0], filename);
-	        break;
-	    }
-	    case (WITH_RANDOM_GENERATION):
-	    {
+            break;
+        }
+        case (WITH_RANDOM_GENERATION):
+        {
             create_dots_rand(&dots[0]);
-	        break;
-	    }
-	    case (WITH_KEYBOARD_INPUT):
-	    {
+            break;
+        }
+        case (WITH_KEYBOARD_INPUT):
+        {
             create_dots_from_keyboard(&dots[0]);
-	        break;
-	    }
+            break;
+        }
     }
     for (i = 0; i < 10; i++)
     {
@@ -302,5 +297,5 @@ int solving_geometric_tasks(int mode)
     SetTextColor(hDC, RGB(0, 0, 0));
     SetBkColor(hDC, RGB(255, 255, 255));
     system("CLS");
-	return 0;
+    return 0;
 }

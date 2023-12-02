@@ -1,8 +1,3 @@
-//sorting_tasks.cpp
-
-// This is a personal academic project. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
-
 #include "common.h"
 #include "sorting_tasks.h"
 
@@ -143,24 +138,24 @@ int sorting_tasks(int mode)
     int* array = create_array(lenght);
     switch(mode)
     {
-		case (WITH_FILE_INPUT):
-	    {
-	        char filename[256];
+        case (WITH_FILE_INPUT):
+        {
+            char filename[256];
             printf("Введите путь к файлу (пример: D:\\Documents\\filename.txt): ");
-	        scanf_s("%255s", &filename, sizeof(filename));
-	        fill_array_from_file(array, lenght, filename);
-	        break;
-	    }
-		case (WITH_RANDOM_GENERATION):
-		{
-			fill_array_rand(array, lenght);
-			break;
-		}
-		case (WITH_KEYBOARD_INPUT):
-		{
+            scanf_s("%255s", &filename, sizeof(filename));
+            fill_array_from_file(array, lenght, filename);
+            break;
+        }
+        case (WITH_RANDOM_GENERATION):
+        {
             fill_array_rand(array, lenght);
             break;
-		}
+        }
+        case (WITH_KEYBOARD_INPUT):
+        {
+            fill_array_rand(array, lenght);
+            break;
+        }
     }
     printf("Первоначальный массив:\n");
     output_array(array, lenght);
@@ -174,5 +169,5 @@ int sorting_tasks(int mode)
     printf("\nНажмите любую клавишу, чтоб вернуться в меню...");
     _getch();
     system("CLS");
-	return 0;
+    return 0;
 }
