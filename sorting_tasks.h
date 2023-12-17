@@ -8,7 +8,7 @@ extern void output_array_with_colors(int* array, int length, int index1, int ind
 extern void fill_array_rand(int* array, int lenght);
 extern void fill_array_from_keyboard(int* array, int lenght);
 extern void fill_array_from_file(int* array, int lenght, const char* filename);
-extern void delete_positive_numbers(int* array, int* length);
+extern void delete_negative_numbers(int* array, int* length);
 extern void selection_sort(int* array, int length);
 extern int sorting_tasks(int mode);
 

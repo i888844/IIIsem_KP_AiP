@@ -94,7 +94,7 @@ void fill_matrix_from_keyboard(double** matrix, int rows, int columns)
     {
         for (int j = 0; j < columns; j++)
         {
-            printf("Введите элемент в позиции [%f][%f]: ", i, j);
+            printf("Введите элемент в позиции [%i][%i]: ", i, j);
             scanf_s("%f", &matrix[i][j]);
         }
     }
@@ -115,7 +115,7 @@ void fill_matrix_from_file(double** matrix, int rows, int columns, const char* f
         for (int j = 0; j < columns; j++)
         {
             number = 0.0;
-            if (fscanf(file, "%f", &number) == 1)
+            if (fscanf(file, "%lf", &number) == 1)
             {
                 matrix[i][j] = number;
             }

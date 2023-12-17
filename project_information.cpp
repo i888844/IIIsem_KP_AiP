@@ -40,7 +40,7 @@ int project_information(int mode)
     }
     int max_length = 0;
     int length = 0;
-    int ch;
+    char ch;
     while ((ch = fgetc(file)) != EOF)
     {
         if (ch != '\n')

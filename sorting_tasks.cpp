@@ -127,7 +127,6 @@ int sorting_tasks(int mode)
 {
     system("CLS");
     int lenght = 0;
-    int cmd = 0;
     printf("¬ведите длину массива: ");
     scanf_s("%i", &lenght);
     while (lenght <= 0)
@@ -153,7 +152,7 @@ int sorting_tasks(int mode)
         }
         case (WITH_KEYBOARD_INPUT):
         {
-            fill_array_rand(array, lenght);
+            fill_array_from_keyboard(array, lenght);
             break;
         }
     }
